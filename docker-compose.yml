@@ -1,0 +1,30 @@
+version: "3"
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:6.0.6
+    volumes:
+      - ~/mongo:/data/db
+    ports:
+      - "27016:27017"
+    networks:
+      - ame
+  
+  web:
+    build: .
+    env_file:
+      - .env
+    container_name: ame-server
+    command: uvicorn server.main:app --host 0.0.0.0 --reload
+    volumes:
+      - .:/app
+    ports:
+      - "8008:8000"
+    networks:
+      - ame
+    depends_on:
+      - mongodb
+
+networks:
+  ame:
+      driver: bridge

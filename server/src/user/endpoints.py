@@ -44,7 +44,7 @@ async def get_user_by_id(user_id: str):
     return ResponseModel(user, "Get user successfully.")
 
 
-@router.post("/register", response_description="Add user to database", dependencies=[Depends(validate_token)])
+@router.post("/register", response_description="Add user to database")
 async def add_user_data(user: UserSchema = Body(...)):
     try:
         user = jsonable_encoder(user)

@@ -32,7 +32,7 @@ class UserLoginSchema(BaseModel):
         }
 
 
-class PutUserSchema(BaseModel):
+class PatchUserSchema(BaseModel):
     fullname: Optional[str]
     email: Optional[EmailStr]
     password: Optional[str]
@@ -47,7 +47,7 @@ class PutUserSchema(BaseModel):
         }
 
 
-class PatchUserSchema(BaseModel):
+class PutUserSchema(BaseModel):
     fullname: str = Field(...)
     email: EmailStr = Field(...)
     password: str = Field(...)

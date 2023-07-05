@@ -12,6 +12,7 @@ class Users(Document):
     email = fields.EmailField(unique=True)
     password = fields.StrField()
     fullname = fields.StrField(default="John")
+    is_superuser = fields.BooleanField(default=False)
 
     class Meta:
         collection = ame.users

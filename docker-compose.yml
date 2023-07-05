@@ -1,7 +1,32 @@
 version: "3"
 services:
+  redis:
+    image: redis:latest
+    container_name: redis_fastapi_db
+    ports:
+      - 6378:6379
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - ~redis-data:/data/db
+    networks:
+      - ame
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-ui
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=admin
+      - HTTP_PASSWORD=admin
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis
+    networks:
+      - ame
+
   mongodb:
-    container_name: mongodb
+    container_name: mongodb-demo
     image: mongo:6.0.6
     volumes:
       - ~/mongo:/data/db
@@ -14,7 +39,9 @@ services:
     build: .
     env_file:
       - .env
-    container_name: ame-server
+    container_name: ame-server-demo
+    environment:
+      - REDIS_OM_URL=redis://redis:6379
     command: uvicorn server.main:app --host 0.0.0.0 --reload
     volumes:
       - .:/app
@@ -23,6 +50,7 @@ services:
     networks:
       - ame
     depends_on:
+      - redis
       - mongodb
 
 networks:

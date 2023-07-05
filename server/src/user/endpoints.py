@@ -104,11 +104,13 @@ async def login(
         subject=user["username"],
         expires_time=timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
     )
+    user.pop("password")
     data = {
         "access_token": access_token,
         "refresh_token": refresh_token,
         "token_type": "bearer",
-        "expires_time": datetime.now(tz=ZoneInfo("Asia/Ho_Chi_Minh")) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        "expires_time": datetime.now(tz=ZoneInfo("Asia/Ho_Chi_Minh")) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
+        "user": user
     }
 
     return ResponseModel(data, "Login successful!")

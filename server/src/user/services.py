@@ -15,6 +15,7 @@ def user_helper(user) -> dict:
         "fullname": user["fullname"],
         "email": user["email"],
         "username": user["username"],
+        "is_superuser": user["is_superuser"],
         "password": user["password"]
     }
 

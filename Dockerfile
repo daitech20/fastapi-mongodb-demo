@@ -16,6 +16,7 @@ COPY . .
 
 # Expose FastApi Server Port
 EXPOSE 8008
+EXPOSE 6379
 
 # Start webserver
 CMD ["uvicorn", "server.main:app", "--host=0.0.0.0", "--reload"]
